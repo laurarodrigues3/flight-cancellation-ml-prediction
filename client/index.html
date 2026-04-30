@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Flight Prediction System</title>
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+        <header class="hero">
+                <div class="hero-content">
+                        <div>
+                                <p class="eyebrow">Deployment Pipeline</p>
+                                <h1>Flight Prediction AI</h1>
+                                <p class="lead">
+                                        An advanced classification system to predict flight cancellations.
+                                        Uses a full pipeline with Cyclic Transformation, Ordinal Encoding, and MinMax
+                                        Scaling.
+                                </p>
+                        </div>
+                </div>
+        </header>
+
+        <main class="container">
+                <div class="tabs">
+                        <button class="tab-btn active" onclick="switchTab('predict')">Single Prediction</button>
+                        <button class="tab-btn" onclick="switchTab('evaluate')">Performance Estimation</button>
+                </div>
+
+                <!-- Single Prediction Section -->
+                <div id="predict-tab" class="glass-card active" style="margin-bottom: 10px;">
+                        <div class="panel-header" style="margin-bottom: 10px;">
+                                <div class="title-with-button">
+                                        <h2>Predict Cancellation</h2>
+                                        <button class="btn-secondary btn-small" onclick="clearFields()">Clear All
+                                                Fields</button>
+                                </div>
+                                <div class="form-group" style="min-width: 200px;" style="margin-bottom: 10px;">
+                                        <select id="single-model-select" style="margin-bottom: 10px;">
+                                                <option value="nb">Naive Bayes</option>
+                                                <option value="knn">K-Nearest Neighbors</option>
+                                                <option value="lr">Logistic Regression</option>
+                                                <option value="dt">Decision Tree</option>
+                                                <option value="mlp">Multi-layer Perceptron</option>
+                                                <option value="rf">Random Forest</option>
+                                        </select>
+                                </div>
+                        </div>
+
+                        <form id="prediction-form" class="form-grid">
+                                <!-- Inputs in specific order -->
+                                <div class="form-group"><label>FlightDate</label><input type="text" name="FlightDate"
+                                                value="2022-04-04"></div>
+                                <div class="form-group"><label>Airline</label><input type="text" name="Airline"
+                                                value="Delta Air Lines Inc."></div>
+                                <div class="form-group"><label>Origin</label><input type="text" name="Origin"
+                                                value="JFK"></div>
+                                <div class="form-group"><label>Dest</label><input type="text" name="Dest" value="LAX">
+                                </div>
+                                <div class="form-group"><label>CRSDepTime</label><input type="number" name="CRSDepTime"
+                                                value="600"></div>
+                                <div class="form-group"><label>CRSElapsedTime</label><input type="number"
+                                                name="CRSElapsedTime" value="350"></div>
+                                <div class="form-group"><label>Distance</label><input type="number" name="Distance"
+                                                value="2475"></div>
+                                <div class="form-group"><label>Year</label>
+                                        <select name="Year">
+                                                <option value="2022" selected>2022</option>
+                                        </select>
+                                </div>
+                                <div class="form-group"><label>Quarter</label>
+                                        <select name="Quarter">
+                                                <option value="1">1</option>
+                                                <option value="2" selected>2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                        </select>
+                                </div>
+                                <div class="form-group"><label>Month</label>
+                                        <select name="Month">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4" selected>4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                        </select>
+                                </div>
+                                <div class="form-group"><label>DayofMonth</label>
+                                        <select name="DayofMonth">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4" selected>4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                                <option value="13">13</option>
+                                                <option value="14">14</option>
+                                                <option value="15">15</option>
+                                                <option value="16">16</option>
+                                                <option value="17">17</option>
+                                                <option value="18">18</option>
+                                                <option value="19">19</option>
+                                                <option value="20">20</option>
+                                                <option value="21">21</option>
+                                                <option value="22">22</option>
+                                                <option value="23">23</option>
+                                                <option value="24">24</option>
+                                                <option value="25">25</option>
+                                                <option value="26">26</option>
+                                                <option value="27">27</option>
+                                                <option value="28">28</option>
+                                                <option value="29">29</option>
+                                                <option value="30">30</option>
+                                                <option value="31">31</option>
+                                        </select>
+                                </div>
+                                <div class="form-group"><label>DayOfWeek</label>
+                                        <select name="DayOfWeek">
+                                                <option value="1" selected>1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                        </select>
+                                </div>
+                                <div class="form-group"><label>Marketing_Airline_Network</label>
+                                        <select name="Marketing_Airline_Network">
+                                                <option value="AA">AA</option>
+                                                <option value="AS">AS</option>
+                                                <option value="B6">B6</option>
+                                                <option value="DL" selected>DL</option>
+                                                <option value="F9">F9</option>
+                                                <option value="G4">G4</option>
+                                                <option value="HA">HA</option>
+                                                <option value="NK">NK</option>
+                                                <option value="UA">UA</option>
+                                                <option value="WN">WN</option>
+                                        </select>
+                                </div>
+                                <div class="form-group"><label>Operated_or_Branded_Code_Share_Partners</label>
+                                        <select name="Operated_or_Branded_Code_Share_Partners">
+                                                <option value="AA">AA</option>
+                                                <option value="AA_CODESHARE">AA_CODESHARE</option>
+                                                <option value="AS">AS</option>
+                                                <option value="AS_CODESHARE">AS_CODESHARE</option>
+                                                <option value="B6">B6</option>
+                                                <option value="DL" selected>DL</option>
+                                                <option value="DL_CODESHARE">DL_CODESHARE</option>
+                                                <option value="F9">F9</option>
+                                                <option value="G4">G4</option>
+                                                <option value="HA">HA</option>
+                                                <option value="NK">NK</option>
+                                                <option value="UA">UA</option>
+                                                <option value="UA_CODESHARE">UA_CODESHARE</option>
+                                                <option value="WN">WN</option>
+                                        </select>
+                                </div>
+                                <div class="form-group"><label>DOT_ID_Marketing_Airline</label>
+                                        <select name="DOT_ID_Marketing_Airline">
+                                                <option value="19393">19393</option>
+                                                <option value="19690">19690</option>
+                                                <option value="19790" selected>19790</option>
+                                                <option value="19805">19805</option>
+                                                <option value="19930">19930</option>
+                                                <option value="19977">19977</option>
+                                                <option value="20368">20368</option>
+                                                <option value="20409">20409</option>
+                                                <option value="20416">20416</option>
+                                                <option value="20436">20436</option>
+                                        </select>
+                                </div>
+                                <div class="form-group"><label>IATA_Code_Marketing_Airline</label>
+                                        <select name="IATA_Code_Marketing_Airline">
+                                                <option value="AA">AA</option>
+                                                <option value="AS">AS</option>
+                                                <option value="B6">B6</option>
+                                                <option value="DL" selected>DL</option>
+                                                <option value="F9">F9</option>
+                                                <option value="G4">G4</option>
+                                                <option value="HA">HA</option>
+                                                <option value="NK">NK</option>
+                                                <option value="UA">UA</option>
+                                                <option value="WN">WN</option>
+                                        </select>
+                                </div>
+                                <div class="form-group"><label>Flight_Number_Marketing_Airline</label><input
+                                                type="number" name="Flight_Number_Marketing_Airline" value="1234"></div>
+                                <div class="form-group"><label>Operating_Airline</label>
+                                        <select name="Operating_Airline">
+                                                <option value="9E">9E</option>
+                                                <option value="AA">AA</option>
+                                                <option value="AS">AS</option>
+                                                <option value="B6">B6</option>
+                                                <option value="C5">C5</option>
+                                                <option value="DL" selected>DL</option>
+                                                <option value="F9">F9</option>
+                                                <option value="G4">G4</option>
+                                                <option value="G7">G7</option>
+                                                <option value="HA">HA</option>
+                                                <option value="MQ">MQ</option>
+                                                <option value="NK">NK</option>
+                                                <option value="OH">OH</option>
+                                                <option value="OO">OO</option>
+                                                <option value="PT">PT</option>
+                                                <option value="QX">QX</option>
+                                                <option value="UA">UA</option>
+                                                <option value="WN">WN</option>
+                                                <option value="YV">YV</option>
+                                                <option value="YX">YX</option>
+                                                <option value="ZW">ZW</option>
+                                        </select>
+                                </div>
+                                <div class="form-group"><label>DOT_ID_Operating_Airline</label>
+                                        <select name="DOT_ID_Operating_Airline">
+                                                <option value="19393">19393</option>
+                                                <option value="19687">19687</option>
+                                                <option value="19690">19690</option>
+                                                <option value="19790" selected>19790</option>
+                                                <option value="19805">19805</option>
+                                                <option value="19930">19930</option>
+                                                <option value="19977">19977</option>
+                                                <option value="20046">20046</option>
+                                                <option value="20304">20304</option>
+                                                <option value="20363">20363</option>
+                                                <option value="20368">20368</option>
+                                                <option value="20378">20378</option>
+                                                <option value="20397">20397</option>
+                                                <option value="20398">20398</option>
+                                                <option value="20409">20409</option>
+                                                <option value="20416">20416</option>
+                                                <option value="20427">20427</option>
+                                                <option value="20436">20436</option>
+                                                <option value="20445">20445</option>
+                                                <option value="20452">20452</option>
+                                                <option value="20500">20500</option>
+                                        </select>
+                                </div>
+                                <div class="form-group"><label>IATA_Code_Operating_Airline</label>
+                                        <select name="IATA_Code_Operating_Airline">
+                                                <option value="9E">9E</option>
+                                                <option value="AA">AA</option>
+                                                <option value="AS">AS</option>
+                                                <option value="B6">B6</option>
+                                                <option value="C5">C5</option>
+                                                <option value="DL" selected>DL</option>
+                                                <option value="F9">F9</option>
+                                                <option value="G4">G4</option>
+                                                <option value="G7">G7</option>
+                                                <option value="HA">HA</option>
+                                                <option value="MQ">MQ</option>
+                                                <option value="NK">NK</option>
+                                                <option value="OH">OH</option>
+                                                <option value="OO">OO</option>
+                                                <option value="PT">PT</option>
+                                                <option value="QX">QX</option>
+                                                <option value="UA">UA</option>
+                                                <option value="WN">WN</option>
+                                                <option value="YV">YV</option>
+                                                <option value="YX">YX</option>
+                                                <option value="ZW">ZW</option>
+                                        </select>
+                                </div>
+                                <div class="form-group"><label>Tail_Number</label><input type="text" name="Tail_Number"
+                                                value="N324US"></div>
+                                <div class="form-group"><label>Flight_Number_Operating_Airline</label><input
+                                                type="number" name="Flight_Number_Operating_Airline" value="1234"></div>
+                                <div class="form-group"><label>OriginAirportID</label><input type="number"
+                                                name="OriginAirportID" value="12478"></div>
+                                <div class="form-group"><label>OriginAirportSeqID</label><input type="number"
+                                                name="OriginAirportSeqID" value="1247805"></div>
+                                <div class="form-group"><label>OriginCityMarketID</label><input type="number"
+                                                name="OriginCityMarketID" value="31703"></div>
+                                <div class="form-group"><label>OriginCityName</label><input type="text"
+                                                name="OriginCityName" value="New York, NY"></div>
+                                <div class="form-group"><label>OriginState</label><input type="text" name="OriginState"
+                                                value="NY"></div>
+                                <div class="form-group"><label>OriginStateFips</label><input type="number"
+                                                name="OriginStateFips" value="36"></div>
+                                <div class="form-group"><label>OriginStateName</label><input type="text"
+                                                name="OriginStateName" value="New York"></div>
+                                <div class="form-group"><label>OriginWac</label><input type="number" name="OriginWac"
+                                                value="22"></div>
+                                <div class="form-group"><label>DestAirportID</label><input type="number"
+                                                name="DestAirportID" value="12892"></div>
+                                <div class="form-group"><label>DestAirportSeqID</label><input type="number"
+                                                name="DestAirportSeqID" value="1289208"></div>
+                                <div class="form-group"><label>DestCityMarketID</label><input type="number"
+                                                name="DestCityMarketID" value="32575"></div>
+                                <div class="form-group"><label>DestCityName</label><input type="text"
+                                                name="DestCityName" value="Los Angeles, CA"></div>
+                                <div class="form-group"><label>DestState</label><input type="text" name="DestState"
+                                                value="CA"></div>
+                                <div class="form-group"><label>DestStateFips</label><input type="number"
+                                                name="DestStateFips" value="6"></div>
+                                <div class="form-group"><label>DestStateName</label><input type="text"
+                                                name="DestStateName" value="California"></div>
+                                <div class="form-group"><label>DestWac</label><input type="number" name="DestWac"
+                                                value="91"></div>
+                                <div class="form-group"><label>DepTimeBlk</label>
+                                        <select name="DepTimeBlk">
+                                                <option value="0001-0559">0001-0559</option>
+                                                <option value="0600-0659" selected>0600-0659</option>
+                                                <option value="0700-0759">0700-0759</option>
+                                                <option value="0800-0859">0800-0859</option>
+                                                <option value="0900-0959">0900-0959</option>
+                                                <option value="1000-1059">1000-1059</option>
+                                                <option value="1100-1159">1100-1159</option>
+                                                <option value="1200-1259">1200-1259</option>
+                                                <option value="1300-1359">1300-1359</option>
+                                                <option value="1400-1459">1400-1459</option>
+                                                <option value="1500-1559">1500-1559</option>
+                                                <option value="1600-1659">1600-1659</option>
+                                                <option value="1700-1759">1700-1759</option>
+                                                <option value="1800-1859">1800-1859</option>
+                                                <option value="1900-1959">1900-1959</option>
+                                                <option value="2000-2059">2000-2059</option>
+                                                <option value="2100-2159">2100-2159</option>
+                                                <option value="2200-2259">2200-2259</option>
+                                                <option value="2300-2359">2300-2359</option>
+                                        </select>
+                                </div>
+                                <div class="form-group"><label>CRSArrTime</label><input type="number" name="CRSArrTime"
+                                                value="930"></div>
+                                <div class="form-group"><label>ArrTimeBlk</label>
+                                        <select name="ArrTimeBlk">
+                                                <option value="0001-0559">0001-0559</option>
+                                                <option value="0600-0659">0600-0659</option>
+                                                <option value="0700-0759">0700-0759</option>
+                                                <option value="0800-0859">0800-0859</option>
+                                                <option value="0900-0959" selected>0900-0959</option>
+                                                <option value="1000-1059">1000-1059</option>
+                                                <option value="1100-1159">1100-1159</option>
+                                                <option value="1200-1259">1200-1259</option>
+                                                <option value="1300-1359">1300-1359</option>
+                                                <option value="1400-1459">1400-1459</option>
+                                                <option value="1500-1559">1500-1559</option>
+                                                <option value="1600-1659">1600-1659</option>
+                                                <option value="1700-1759">1700-1759</option>
+                                                <option value="1800-1859">1800-1859</option>
+                                                <option value="1900-1959">1900-1959</option>
+                                                <option value="2000-2059">2000-2059</option>
+                                                <option value="2100-2159">2100-2159</option>
+                                                <option value="2200-2259">2200-2259</option>
+                                                <option value="2300-2359">2300-2359</option>
+                                        </select>
+                                </div>
+                                <div class="form-group"><label>DistanceGroup</label>
+                                        <select name="DistanceGroup">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                        </select>
+                                </div>
+                        </form>
+
+                        <button class="btn-primary" onclick="predict()">Run Inference</button>
+
+                        <div id="prediction-result">
+                                <!-- Result injected here -->
+                        </div>
+                </div>
+
+                <!-- Evaluation Section -->
+                <div id="evaluate-tab" class="glass-card">
+                        <h2>Model Performance Evaluation</h2>
+                        <div class="form-group" style="margin-bottom: 20px;">
+                                <label>Select Model(s) to Evaluate</label>
+                                <select id="eval-model-select">
+                                        <option value="all">All Models</option>
+                                        <option value="nb">Naive Bayes</option>
+                                        <option value="knn">KNN</option>
+                                        <option value="lr">Logistic Regression</option>
+                                        <option value="dt">Decision Tree</option>
+                                        <option value="mlp">Multi-layer Perceptron</option>
+                                        <option value="rf">Random Forest</option>
+                                </select>
+                        </div>
+
+                        <div class="upload-zone" onclick="document.getElementById('file-upload').click()">
+                                <p style="color: var(--primary); font-weight: 600;">Click to Upload Validation Dataset
+                                        (.csv)</p>
+                                <p style="font-size: 0.9rem; margin-top: 8px;">Supports raw CSV with target column
+                                        'Cancelled'</p>
+                                <input type="file" id="file-upload" hidden accept=".csv">
+                                <p id="file-name" style="margin-top: 10px; color: var(--accent); font-weight: bold;">
+                                </p>
+                        </div>
+
+                        <button class="btn-primary" onclick="evaluate_models()">Evaluate Performance</button>
+
+                        <div id="evaluation-results">
+                                <!-- Results injected here -->
+                        </div>
+                </div>
+        </main>
+
+        <script src="script.js"></script>
+</body>
+
+</html>

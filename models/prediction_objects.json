@@ -1,0 +1,59 @@
+{
+    "description": "Manifest of Prediction Objects for Flight Classification System",
+    "pipeline_definition": "pipeline.py",
+    "models": {
+        "naive_bayes": "models/naive_bayes.joblib",
+        "knn": "models/knn.joblib",
+        "logistic_regression": "models/logistic_regression.joblib",
+        "decision_tree": "models/decision_tree.joblib",
+        "mlp": "models/mlp.joblib",
+        "random_forest": "models/random_forest.joblib"
+    },
+    "preprocessing": "models/pipeline.joblib",
+    "hyperparameters": {
+        "naive_bayes": {
+            "algorithm": "GaussianNB",
+            "params": {}
+        },
+        "knn": {
+            "algorithm": "KNeighborsClassifier",
+            "params": {
+                "n_neighbors": 5,
+                "metric": "euclidean"
+            }
+        },
+        "logistic_regression": {
+            "algorithm": "LogisticRegression",
+            "params": {
+                "max_iter": 1000
+            }
+        },
+        "decision_tree": {
+            "algorithm": "DecisionTreeClassifier",
+            "params": {}
+        },
+        "mlp": {
+            "algorithm": "MLPClassifier",
+            "params": {
+                "max_iter": 500
+            }
+        },
+        "random_forest": {
+            "algorithm": "RandomForestClassifier",
+            "params": {}
+        }
+    },
+    "pipeline_description": {
+        "steps": [
+            "1. Missing Value Imputation (mean for numeric, mode for categorical)",
+            "2. Type Enforcement (numeric coercion)",
+            "3. Cyclic Variable Transformation (sin/cos encoding for temporal features)",
+            "4. Ordinal Encoding (categorical to numeric)",
+            "5. Shift Adjustment (handle negative encoded values)",
+            "6. MinMax Scaling (normalize to [0,1])",
+            "7. Feature Selection (select training features)"
+        ],
+        "scaling_method": "MinMax",
+        "encoding_method": "Ordinal"
+    }
+}
