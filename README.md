@@ -2,38 +2,62 @@
 
 <div align="center">
   <p><strong>An end-to-end Machine Learning web application that predicts flight cancellations based on historical aviation data.</strong></p>
-  <p><a href="https://teu-link-do-render-aqui.onrender.com" target="_blank"><strong>-> Test the Live API & Web Client Here</strong></a></p>
+  <p><a href="https://flight-cancellation-ml-prediction.onrender.com" target="_blank"><strong>🚀 Test the Live API & Web Client Here</strong></a></p>
 </div>
 
 ## Project Overview
 
 **Flight Cancellation ML Prediction** is a comprehensive Data Science and Machine Learning project focused on predicting flight cancellations. Leveraging the extensive Flight Delay Dataset (2022), this project encompasses the entire Knowledge Discovery in Databases (KDD) process—from rigorous data profiling and feature engineering to model training, evaluation, and deployment via a modern REST API.
 
-The system allows users to evaluate different classification algorithms (Naive Bayes, K-Nearest Neighbors, Logistic Regression, Decision Trees, Multi-layer Perceptron, and Random Forests) on flight data to predict potential disruptions, providing a robust tool for aviation analytics.
+## Features
 
-## Key Features
+### Single Flight Prediction
+Input individual flight details through a web form to receive instant cancellation predictions. The system automatically handles data transformation and applies the selected model.
 
-- **End-to-End ML Pipeline**: Custom preprocessing pipeline (`PredictionPipeline`) handling missing value imputation, cyclic feature encoding (e.g., temporal data like `CRSDepTime`), scaling, and feature selection.
-- **Multiple Classification Models**: Integration and comparison of 6 distinct machine learning algorithms.
-- **RESTful API**: Built with **FastAPI** to serve predictions and model evaluations in real-time.
-- **Interactive Web Client**: A responsive vanilla HTML/CSS/JS frontend to upload datasets, test single predictions, and visualize model metrics.
-- **Comprehensive Data Analysis**: In-depth statistical analysis, data profiling (dimensionality, distribution, sparsity), and preprocessing strategy documented in the accompanying technical report.
+### Batch Evaluation
+Upload CSV files containing historical flight data to evaluate model performance. The system computes accuracy, precision, recall, and F1-score metrics.
+
+### Multi-Model Support
+Choose from six different classification algorithms:
+- **Naive Bayes** (GaussianNB)
+- **K-Nearest Neighbors** (KNN)
+- **Logistic Regression**
+- **Decision Tree**
+- **Multi-Layer Perceptron** (MLP)
+- **Random Forest**
 
 ## Technology Stack
 
-- **Backend / API**: Python 3.10+, FastAPI, Uvicorn
-- **Machine Learning**: Scikit-Learn, Pandas, NumPy, Joblib
-- **Frontend**: HTML5, Vanilla CSS, JavaScript
+| Component | Technology |
+|-----------|------------|
+| **Backend** | Python, FastAPI |
+| **ML Framework** | Scikit-learn |
+| **Data Processing** | Pandas, NumPy |
+| **Model Persistence** | Joblib |
+| **Frontend** | HTML5, CSS3, JavaScript |
 
-## Project Structure
+## Data Pipeline
+
+The robust preprocessing pipeline (`PredictionPipeline`) applies the following transformations consistently for both training and real-time inference:
+
+1. **Missing Value Imputation**: Mean imputation for numeric features, mode imputation for categorical features.
+2. **Type Enforcement**: Numeric coercion and data type standardization.
+3. **Cyclic Encoding**: Sine/cosine transformation for temporal features (Month, DayOfWeek, Quarter, Time blocks).
+4. **Ordinal Encoding**: Categorical to numeric conversion for string features.
+5. **MinMax Scaling**: Feature normalization to [0,1] range.
+6. **Feature Selection**: Retention of highly correlated features for optimal model input.
+
+## Architecture & Project Structure
+
+![Architecture Diagram](Documentation/architecture_diagram.png)
 
 ```text
 ├── client/                 # Frontend web interface (HTML, CSS, JS)
 ├── models/                 # Serialized ML models and pipeline artifacts (.joblib)
 ├── server/                 # FastAPI application
 │   ├── main.py             # API endpoints and server configuration
-│   └── pipeline.py         # Custom ML data transformation and prediction pipeline
-├── InstallationGuide.txt   # Setup instructions
+│   └── pipeline.py         # Data transformation and inference pipeline
+├── Documentation/          # Architecture diagrams and schema documents
 ├── requirements.txt        # Python dependencies
 └── Technical_Analysis_Report.pdf # Comprehensive Data Science and EDA Report
 ```
@@ -85,6 +109,8 @@ Navigate to `http://localhost:8000` in your web browser to access the interactiv
 
 ## API Endpoints
 
-- `GET /api/models`: Returns a list of all available classification models.
-- `POST /api/predict-single`: Accepts a JSON payload with flight features and returns a cancellation prediction using the specified model.
-- `POST /api/evaluate-models`: Accepts a `.csv` file upload and evaluates the dataset against one or all available models, returning key performance metrics (Accuracy, Precision, Recall, F1-Score).
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/models` | Returns a list of all available classification models |
+| POST | `/api/predict-single` | Single flight prediction |
+| POST | `/api/evaluate-models` | Batch model evaluation from CSV upload |
