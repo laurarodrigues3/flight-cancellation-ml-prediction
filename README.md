@@ -1,8 +1,9 @@
 # Flight Cancellation ML Prediction System
 
 <div align="center">
-  <p><strong>An end-to-end Machine Learning web application that predicts flight cancellations based on historical aviation data.</strong></p>
-  <p><a href="https://flight-cancellation-ml-prediction.onrender.com" target="_blank"><strong>🚀 Test the Live API & Web Client Here</strong></a></p>
+
+  <p><a href="https://flight-cancellation-ml-prediction.onrender.com" target="_blank"><strong>Test the Live API & Web Client Here</strong></a></p>
+
 </div>
 
 ## Project Overview
