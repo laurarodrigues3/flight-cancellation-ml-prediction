@@ -79,7 +79,7 @@ The report covers:
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/flight-cancellation-ml-prediction.git
+git clone https://github.com/laurarodrigues3/flight-cancellation-ml-prediction.git
 cd flight-cancellation-ml-prediction
 ```
 
